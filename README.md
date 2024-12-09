@@ -13,6 +13,7 @@ E para aplicar a configuração feita anteriormente, execute o seguinte comando:
 ```bash
 ~$ source .bashrc
 ```
+![alt text](./img/source_gitlab.png)
 
 # Instalação do GitLab-CE usando Docker Engine
 Feitas as configurações das variáveis de ambiente e dos volumes, podemos iniciar a instalação.
@@ -73,6 +74,7 @@ ngrok http gitlab-ce.local
 ngrok http npm
 ```
 # Usando a interface do Nginx Proxy Manager - NPM
+![alt text](./img/nginx-proxy-gitlab-ce.png)
 > Navegue até a pasta do projeto NPM, logo em seguida execute o comando bash a seguir:
 ```bash
 sudo docker compose up -d
