@@ -1,0 +1,38 @@
+services:
+  npm:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: proxy-manager
+    restart: always
+    ports:
+      - "80:80"
+      - "81:81"
+      - "443:443"
+    environment:
+      DB_MYSQL_HOST: "db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "npm"
+      DB_MYSQL_PASSWORD: "npm_password"
+      DB_MYSQL_NAME: "npm"
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    networks:
+      - nginx-gitlab
+
+  db:
+    image: mariadb
+    container_name: npm-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "root_password"
+      MYSQL_DATABASE: "npm"
+      MYSQL_USER: "npm"
+      MYSQL_PASSWORD: "npm_password"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    networks:
+      - nginx-gitlab
+
+networks:
+  nginx-gitlab:
+    external: true

@@ -1,0 +1,27 @@
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab
+    hostname: gitlab.internal
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://gitlab-ce.local/';
+        gitlab_rails['lfs_enabled'] = true;
+      GITLAB_ROOT_EMAIL: "${GITLAB_ROOT_EMAIL}"
+      GITLAB_ROOT_PASSWORD: "${GITLAB_ROOT_PASSWORD}"
+    ports:
+      - "8080:80"
+      - "22:22"
+    restart: always
+    shm_size: "256m"
+    user: root
+    volumes:
+      - "${GITLAB_HOME}/config:/etc/gitlab"
+      - "${GITLAB_HOME}/logs:/var/log/gitlab"
+      - "${GITLAB_HOME}/data:/var/opt/gitlab"
+    networks:
+      - nginx-gitlab
+
+networks:
+  nginx-gitlab:
+    external: true
